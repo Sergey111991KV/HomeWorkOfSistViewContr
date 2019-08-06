@@ -8,28 +8,40 @@
 import MessageUI
 import SafariServices
 import UIKit
-
-class ViewController: UIViewController {
+import MessageUI
+class ViewController: UIViewController{
     
     //MARK: - Outlets
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var labelText: UILabel!
     
-    
-    
-  
-    
     //MARK: - Propertys
-    
-    var stopIndex = 0{
+     var dataManadger = DataManager()
+     var stopIndex = 0{
         didSet{
             stopAddImage()
         }
     }
     
+    
+    var loadData = [Data](){
+        didSet{
+            
+           print("tttttttt")
+        }
+    }
+    
+    var arrayData = [Data](){
+        didSet{
+            dataManadger.saveData(arrayData)
+            print("появились данные")
+        }
+    }
+   
+    
+  
     var imageMainArray : [UIImage] = [UIImage(named:"sietl")!]{
         didSet{
            
@@ -40,8 +52,9 @@ class ViewController: UIViewController {
     
     var imageToSend = [UIImage](){
         didSet{
-            
+          
             sendData()
+            imageToData(imageToSend)
             print("изменение  массива for send")
             print("index\(stopIndex)!!!!")
         }
@@ -59,9 +72,14 @@ class ViewController: UIViewController {
      //MARK: - UIViewController Method
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        loadData = dataManadger.loadDataImage() ?? []
+        dataToImage(loadData)
+        print(loadData)
         updateUI(with: view.bounds.size)
         labelText.isHidden = true
+        
  
     }
     
@@ -88,6 +106,12 @@ class ViewController: UIViewController {
 //        }
 //    }
     
+    //MARK: - Create Image Of Data
+    
+    
+    func createImageArray(data: [Data]){
+        
+    }
 
 
     //MARK: - Gesture
@@ -133,7 +157,7 @@ class ViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)}
         else{
             if self.imageToSend.count > stopIndex{
-                let alert = UIAlertController(title: "это тестовое приложение - последнее Image добавлено не будет(но по правде говоря я не реализовал пока удаление из массива - просто времени нет)", message: nil, preferredStyle: .actionSheet)
+                let alert = UIAlertController(title: "это тестовое приложение - последнее Image добавлено не будет", message: nil, preferredStyle: .actionSheet)
                 
                 let cancelAlert = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
                 alert.addAction(cancelAlert)
@@ -186,21 +210,72 @@ class ViewController: UIViewController {
     
     @IBAction func emailButtonPressed(_ sender: UIButton){
         guard MFMailComposeViewController.canSendMail() else{
-            return  //!!!!
+            print("cann't to send")
+            return
         }
         let mailComposer = MFMailComposeViewController()
         mailComposer.mailComposeDelegate = self
-        mailComposer.setToRecipients(["sergey.cosilov@yandex.ru"])
+        mailComposer.setToRecipients(["sergey.cosilov@gmail.com"])
         mailComposer.setSubject("Ошибка \(Date())")
         mailComposer.setMessageBody("Пожалуйста помогите с Massage composer'ом", isHTML: false)
-        present(mailComposer,animated: true)
+        
+        var archiveUrl: URL? {
+            guard  let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else{ return  nil}
+            return documentDirectory.appendingPathComponent("DataImage").appendingPathExtension("data") }
+        
+        
+        do {
+            let attachmentData = try Data(contentsOf: archiveUrl!)
+            mailComposer.addAttachmentData(attachmentData, mimeType: "dataf", fileName: "DataImage")
+            mailComposer.mailComposeDelegate = self
+            present(mailComposer, animated: true)
+        } catch let error {
+            print("We have encountered error \(error.localizedDescription)")
+        }
         
     }
+    
+    
+    
+//        present(mailComposer,animated: true)
+    
   
     
     @IBAction func infoButton(_ sender: Any) {
         labelText.isHidden = !labelText.isHidden
         
+    }
+    
+    
+    
+    
+    // MARK: - Function to save
+    
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+    
+    //MARK: - ConvertImage
+    
+    func imageToData(_ array: [UIImage]){
+        let image = array.last
+        if image != nil{
+            
+            if image!.pngData() != nil{
+                      self.arrayData.append(image!.pngData()!)
+            }
+        }
+    }
+    
+    func dataToImage(_ array: [Data]){
+        for data in array{
+            let image = UIImage(data: data)
+            if image != nil{
+                imageToSend.append(image!)
+            }
+        }
     }
 }
 
@@ -221,11 +296,35 @@ extension ViewController: UINavigationControllerDelegate{}
 
 extension ViewController: MFMailComposeViewControllerDelegate{
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        dismiss(animated: true)
-    }
+//    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+//        dismiss(animated: true)
+//    }
     
-    func addAttachmentData(){
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .cancelled:
+            print("User cancelled")
+            break
+            
+        case .saved:
+            print("Mail is saved by user")
+            break
+            
+        case .sent:
+            print("Mail is sent successfully")
+            break
+            
+        case .failed:
+            print("Sending mail is failed")
+            break
+        default:
+            break
+        }
+        
+        controller.dismiss(animated: true)
         
     }
+
 }
+//мой контроллер получился слишком большим - можно просто в extension выполнять какие то функции связанные с определенными дейвствиями?
+

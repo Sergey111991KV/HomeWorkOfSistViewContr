@@ -13,6 +13,7 @@
 		1C1DD62B22F6350900785645 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C1DD62A22F6350900785645 /* Assets.xcassets */; };
 		1C1DD62E22F6350900785645 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C1DD62C22F6350900785645 /* LaunchScreen.storyboard */; };
 		1C7B1F7322F6C3B000D3ACE7 /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7B1F7222F6C3B000D3ACE7 /* ImagesViewController.swift */; };
+		1CDC5E7622F81A210053F2D1 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDC5E7522F81A210053F2D1 /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		1C1DD62D22F6350900785645 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C1DD62F22F6350900785645 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C7B1F7222F6C3B000D3ACE7 /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
+		1CDC5E7522F81A210053F2D1 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		1C1DD62222F6350500785645 /* HomeWorkOfSistViewContr */ = {
 			isa = PBXGroup;
 			children = (
+				1CDC5E7522F81A210053F2D1 /* DataManager.swift */,
 				1C1DD62322F6350500785645 /* AppDelegate.swift */,
 				1C7B1F7222F6C3B000D3ACE7 /* ImagesViewController.swift */,
 				1C1DD62522F6350500785645 /* ViewController.swift */,
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C7B1F7322F6C3B000D3ACE7 /* ImagesViewController.swift in Sources */,
+				1CDC5E7622F81A210053F2D1 /* DataManager.swift in Sources */,
 				1C1DD62622F6350500785645 /* ViewController.swift in Sources */,
 				1C1DD62422F6350500785645 /* AppDelegate.swift in Sources */,
 			);

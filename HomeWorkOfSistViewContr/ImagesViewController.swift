@@ -23,9 +23,6 @@ class ImagesViewController: UIViewController {
             
         }
     }
-        
-
-    
     
     override func viewDidLoad() {
         
@@ -33,15 +30,10 @@ class ImagesViewController: UIViewController {
        gesterImage()
     }
   
-  
-    
-
     func gesterImage(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         tap.numberOfTapsRequired = 2
         view.addGestureRecognizer(tap)
-        
-       
     
     }
     
@@ -58,9 +50,7 @@ class ImagesViewController: UIViewController {
         alert.addAction(cancelAlert)
         //alert.popoverPresentationController?.sourceView = sender
        self.present(alert, animated: true, completion: nil)
-        
         }
-        
     }
    
     func destroyImage(index: Int){
@@ -94,8 +84,6 @@ class ImagesViewController: UIViewController {
         Vc.stopIndex = imagesArray.count
     }
 }
-    
-    
 
 extension ImagesViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
