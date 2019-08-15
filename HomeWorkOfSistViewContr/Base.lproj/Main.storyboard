@@ -21,7 +21,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="LfL-NU-Y9S">
                                 <rect key="frame" x="20" y="64" width="374" height="729"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sietl" translatesAutoresizingMaskIntoConstraints="NO" id="ZlM-6N-3Am">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sietl" translatesAutoresizingMaskIntoConstraints="NO" id="ZlM-6N-3Am">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="344.5"/>
                                         <gestureRecognizers/>
                                         <connections>
